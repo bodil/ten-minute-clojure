@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!doctype html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+
+    <title>Clojure in 10 Minutes</title>
+
+    <meta name="description" content="Look it's a slide deck">
+    <meta name="author" content="Bodil Stokke">
+
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+    <link rel="stylesheet" href="css/reveal.min.css">
+    <link rel="stylesheet" href="css/theme/raspberrymint.css" id="theme">
+
+    <!-- For syntax highlighting -->
+    <link rel="stylesheet" href="lib/css/tomorrow-night-eighties.css">
+
+    <!-- If the query includes 'print-pdf', use the PDF print sheet -->
+    <script>
+      document.write( '<link rel="stylesheet" href="css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+    </script>
+
+    <!--[if lt IE 9]>
+    <script src="lib/js/html5shiv.js"></script>
+    <![endif]-->
+
+  </head>
+
+  <body>
+
+    <div class="reveal">
+
+      <!-- Any section element inside of this container is displayed as a slide -->
+      <div class="slides">
+
+        <section>
+          <h4>Bodil Stokke</h4>
+          <h3>@bodil</h3>
+        </section>
+
+        <section>
+          <img src="m/confused-cat.jpg"/>
+          <div class="pic-label big">
+            Clojure?
+          </div>
+        </section>
+
+        <section>
+          <pre><code class="java">interface Function&lt;F,T&gt; {
+    T apply(F input);
+}</code></pre>
+        </section>
+
+        <section>
+          <pre><code class="java">class SquareFunction implements Function&lt;Long,Long&gt; {
+    Long apply(Long number) {
+        return number * number;
+    }
+}</code></pre>
+<pre class="fragment"><code class="clojure">(defn square [number]
+  (* number number))</code></pre>
+        </section>
+
+        <section data-markdown>
+### Java Syntax
+```java
+println("Hello sailor!");
+```
+### Lisp Syntax
+```clojure
+(println "Hello sailor!")
+```
+        </section>
+
+        <section data-markdown>
+### Lists
+```clojure
+(println "Hello sailor!")
+
+("Rainbow Dash" "Twilight Sparkle" "Pinkie Pie")
+
+(0 1 1 2 3 5 8 13 21 34 55)
+```
+        </section>
+
+        <section>
+          <h2>Homoiconic</h2>
+          <img class="no-shadow" src="m/homoiconic.png"/>
+        </section>
+
+        <section>
+          <h2>Homoiconic</h2>
+          <ol>
+            <li class="fragment">Your code is a data structure</li>
+            <li class="fragment">Makes metaprogramming easy</li>
+            <li class="fragment">Macros</li>
+          </ol>
+        </section>
+
+        <section data-markdown>
+          <h3>Data structures</h3>
+          <pre><code class="clojure">;; List (linked list)
+("Rainbow Dash" "Twilight Sparkle" "Pinkie Pie")</code></pre>
+          <pre class="fragment"><code class="clojure">;; Vector (array list)
+["Fluttershy" "Rarity" "Applejack"]</code></pre>
+          <pre class="fragment"><code class="clojure">;; Map (hash map)
+{"name" "Rainbow Dash", "type" "Pegasus pony"}</code></pre>
+        </section>
+
+        <section data-markdown>
+### All the syntax you need
+
+```clojure
+(println "Hello sailor!")
+
+(println "2 + 2 = " (+ 2 2))
+
+(defn add [number1 number2]
+  (+ number1 number2))
+```
+        </section>
+
+        <section>
+          <img src="m/immutable.jpg"/>
+        </section>
+
+        <section>
+          <h3>Immutable Data Structures</h3>
+          <ol>
+            <li class="fragment">No unexpected side effects guaranteed</li>
+            <li class="fragment">The easy way to thread safety</li>
+            <li class="fragment">No, they're not slow</li>
+          </ol>
+        </section>
+
+        <section data-markdown>
+### Look ma, no mutation
+
+```clojure
+(def primes [2 3 5 7 11 13])
+(assoc primes 3 42)
+```
+        </section>
+
+        <section data-markdown>
+### Functions as values
+
+```clojure
+(defn square [number]
+  (* number number))
+
+(def fibonacci [0 1 1 2 3 5 8 13 21 34 55])
+```
+        </section>
+
+        <section data-markdown>
+### Higher order functions
+
+```clojure
+(defn plus-two [number]
+  (+ 2 number))
+
+(defn plus-something [something]
+  (fn [number]
+    (+ something number)))
+```
+        </section>
+
+        <section data-markdown>
+### Combinators
+
+```clojure
+(defn function-plus-something [function]
+  (fn [number]
+    (+ something (function number))))
+```
+        </section>
+
+        <section>
+          <img src="m/multicore-cats.jpg"/>
+          <div class="pic-label big">
+            MULTI-CORE LIKE A BOSS
+          </div>
+        </section>
+
+        <section data-markdown>
+### State gonna state
+
+```clojure
+(def counter-state (atom 0))
+
+(defn count-up []
+  (swap! counter-state inc)
+  @counter-state)
+```
+        </section>
+
+        <section data-markdown>
+### Threads so simple you could cry
+
+```clojure
+(defn sum-to [n]
+  (reduce + (range n)))
+
+; (sum-to 250000000)
+```
+        </section>
+
+        <section>
+          <img src="m/award.jpg"/>
+          <div class="pic-label big">
+            YOU NOW KNOW CLOJURE
+          </div>
+        </section>
+
+        <section>
+          <img src="m/skepticat2.jpg"/>
+          <div class="pic-label big">
+            So... ClojureScript?
+          </div>
+        </section>
+
+        <section>
+          <h3>ClojureScript</h3>
+          <ol>
+            <li class="fragment">A subset of Clojure</li>
+            <li class="fragment">Compiles to Javascript</li>
+            <li class="fragment">Can use Javascript APIs</li>
+            <li class="fragment">NO MORE JAVASCRIPT!</li>
+          </ol>
+        </section>
+
+        <section>
+          <img src="m/hipster-dog.jpg"/>
+          <div class="pic-label big" style="font-size: 1.8em">
+            Node is the new Ruby
+          </div>
+        </section>
+
+        <section>
+          <img src="m/nic.jpg"/>
+          <div class="pic-label big">
+            kthxbye.
+          </div>
+          <p style="margin: 0"><a href="http://bodil.org/ten-minute-clojure/">bodil.org/ten-minute-clojure</a></p>
+          <p style="margin: 0"><a href="https://github.com/bodil/clojurescript-all-the-way-down/">github.com/bodil/clojurescript-all-the-way-down</a></p>
+        </section>
+
+      </div>
+
+    </div>
+
+    <script src="lib/js/head.min.js"></script>
+    <script src="js/reveal.min.js"></script>
+
+    <script>
+
+      // Full list of configuration options available here:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+        controls: false,
+        progress: false,
+        history: true,
+        center: true,
+
+        theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+        transition: Reveal.getQueryHash().transition || 'zoom', // default/cube/page/concave/zoom/linear/none
+
+        // Optional libraries used to extend on reveal.js
+        dependencies: [
+          { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+          { src: 'plugin/markdown/showdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+          { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+          { src: 'plugin/prettify/prettify.js', async: true, callback: function() {
+            var i, els = document.querySelectorAll("code"), l = els.length, el;
+            for (i = 0; i < l; i++) {
+              el = els[i];
+              if (el.className !== "no-highlight")
+                el.innerHTML = prettyPrintOne(el.innerHTML, el.className);
+            }
+          } },
+          // { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+          { src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+          { src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } },
+          { src: 'plugin/catnip/catnip.js', async: true, condition: function() { return window.parent !== window; } },
+          // { src: 'plugin/remotes/remotes.js', async: true, condition: function() { return !!document.body.classList; } }
+        ]
+      });
+
+    </script>
+
+  </body>
+</html>
